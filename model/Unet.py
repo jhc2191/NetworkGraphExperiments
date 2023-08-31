@@ -1,7 +1,7 @@
 import torch
 from torch import nn
 from diffusionv1.Blocks import Block, ResnetBlock
-from diffusionv1.Modules import SinusoidalPositionEmbeddings
+from diffusionv1.Modules import SinusoidalPositionEmbeddings, CrossAttention
 
 class Unet(nn.Module):
     def __init__(self, dim, init_dim=None, out_dim=None, dim_mults=(1, 2, 4, 8), channels=3):
@@ -40,7 +40,7 @@ class Unet(nn.Module):
                     [
                         ResnetBlock(dim_in, dim_out, time_emb_dim=time_dim),
                         ResnetBlock(dim_out, dim_out, time_emb_dim=time_dim),
-                        ##would be attention layer
+                        ##put attention here
                         nn.Conv2d(dim_out, dim_out, 4, 2, 1) if not is_last else nn.Identity(),
                     ] 
                 )
